@@ -1,0 +1,366 @@
+A51 MACRO ASSEMBLER  CLOCK24H                                                             05/14/2022 16:14:25 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\Clock24h.obj
+ASSEMBLER INVOKED BY: E:\Programing Dev Softwares\KeilC\C51\BIN\A51.EXE Clock24h.a51 SET(SMALL) DEBUG PRINT(.\Listings\C
+                      lock24h.lst) OBJECT(.\Objects\Clock24h.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1     ORG 0000h
+0000 0200C3            2             ljmp RST_ISR
+0030                   3     ORG 0030h
+0030                   4             main_pro:
+                       5             
+0030 1200CE            6             lcall begin
+                       7             
+0033 120131            8             lcall hour1
+                       9             
+0036 1200CE           10             lcall begin
+                      11             
+0039 120138           12             lcall hour2
+                      13             
+003C 1200CE           14             lcall begin
+                      15             
+003F 12013F           16             lcall hour3
+                      17             
+0042 1200CE           18             lcall begin
+                      19             
+0045 120146           20             lcall hour4
+                      21             
+0048 1200CE           22             lcall begin
+                      23             
+004B 12014D           24             lcall hour5
+004E 1200CE           25             lcall begin
+                      26             
+0051 120154           27             lcall hour6
+0054 1200CE           28             lcall begin
+                      29             
+0057 12015B           30             lcall hour7
+005A 1200CE           31             lcall begin
+                      32             
+005D 120162           33             lcall hour8
+0060 1200CE           34             lcall begin
+                      35             
+0063 120169           36             lcall hour9
+0066 1200CE           37             lcall begin
+                      38             
+0069 120170           39             lcall hour10
+006C 1200CE           40             lcall begin
+                      41             
+006F 120177           42             lcall hour11
+0072 1200CE           43             lcall begin
+                      44             
+0075 12017E           45             lcall hour12
+0078 1200CE           46             lcall begin
+                      47             
+007B 120185           48             lcall hour13
+007E 1200CE           49             lcall begin
+                      50             
+0081 12018C           51             lcall hour14
+0084 1200CE           52             lcall begin
+                      53             
+0087 120193           54             lcall hour15
+008A 1200CE           55             lcall begin
+                      56             
+008D 12019A           57             lcall hour16
+A51 MACRO ASSEMBLER  CLOCK24H                                                             05/14/2022 16:14:25 PAGE     2
+
+0090 1200CE           58             lcall begin
+                      59             
+                      60             
+0093 1201A1           61             lcall hour17
+0096 1200CE           62             lcall begin
+                      63             
+0099 1201A8           64             lcall hour18
+009C 1200CE           65             lcall begin
+                      66             
+009F 1201AF           67             lcall hour19
+00A2 1200CE           68             lcall begin
+                      69             
+                      70             
+00A5 1201B6           71             lcall hour20
+00A8 1200CE           72             lcall begin
+                      73             
+00AB 1201BD           74             lcall hour21
+00AE 1200CE           75             lcall begin
+                      76             
+00B1 1201C4           77             lcall hour22
+00B4 1200CE           78             lcall begin
+                      79             
+00B7 1201CB           80             lcall hour23
+00BA 1200CE           81             lcall begin
+                      82             
+                      83             
+00BD 1201D2           84             lcall hour24
+                      85             
+00C0 020030           86             ljmp main_pro
+                      87             
+                      88     
+                      89             
+00C3                  90             RST_ISR:
+00C3 7400             91             mov A, #00h
+00C5 F580             92             mov P0, A
+00C7 F5A0             93             mov P2, A
+00C9 F5B0             94             mov P3, A
+00CB 020030           95             ljmp main_pro
+                      96             
+00CE                  97             begin:
+00CE 7F00             98             mov R7, #00h
+00D0 7B3C             99             mov R3,#60
+00D2 7A0A            100             mov R2, #10
+                     101             
+00D4                 102             dem_phut:
+00D4 7806            103             mov R0, #6
+00D6 120100          104             lcall sec
+                     105             
+                     106             ;-- lap 59 lan tuong duong 59 phut
+                     107             ;-- qua duoc 59 phut => nhay hoac call qua hour
+00D9 DBF9            108             djnz R3, dem_phut
+00DB 75A000          109             mov P2, #00h
+00DE 75B000          110             mov P3, #00h
+00E1 1200E5          111             lcall delay
+00E4 22              112             ret
+                     113             
+00E5                 114             delay:
+                     115             ; su dung timer 0 che do 1
+00E5 7E05            116             mov R6, #005h
+00E7                 117             loop5:
+00E7 7DC8            118             mov R5, #0C8h
+00E9                 119             loop4:
+00E9 758910          120             mov TMOD, #10h
+00EC 758DFC          121             mov TH1, #0FCh
+00EF 758B18          122             mov TL1, #018h
+00F2 D28E            123             setb TR1
+A51 MACRO ASSEMBLER  CLOCK24H                                                             05/14/2022 16:14:25 PAGE     3
+
+00F4                 124             loop_1ms:
+00F4 308FFD          125             jnb TF1, loop_1ms
+00F7 C28F            126             clr TF1
+00F9 C28E            127             clr TR1
+00FB DDEC            128             djnz R5, loop4
+00FD DEE8            129             djnz R6, loop5
+00FF 22              130             ret
+                     131             
+                     132     
+0100                 133             sec:
+                     134             ;hien thi tu 0 den 9 x 5 lan
+0100 790A            135             mov R1 ,#10
+                     136             
+0102                 137             loop:
+0102 F5A0            138             mov 0A0h, A
+0104 2410            139             add A, #010h
+0106 1200E5          140             lcall delay
+0109 D9F7            141             djnz R1, loop
+010B 540F            142             anl A, #00Fh
+010D 2401            143             add A, #001h
+                     144             
+010F D8EF            145             djnz R0, sec
+                     146             
+0111 DA06            147             djnz R2, min
+0113                 148             count_min:
+0113 120124          149             lcall muoi_min
+0116 7A0A            150             mov R2, #10
+                     151             
+0118 22              152             ret
+                     153             ;mov R, #10
+                     154             ;;djnz R, muoi
+                     155             ;count_min:
+                     156             ;lcall muoi
+                     157             
+0119                 158             min:
+                     159             ;--dem phut tu 0 den 9 
+                     160             
+0119 EF              161             mov A, R7
+011A 2410            162             add A, #010h
+011C 75A000          163             mov 0A0h, #00h
+011F F5B0            164             mov 0B0h, A
+0121 FF              165             mov R7, A
+0122 E4              166             clr A
+                     167             
+0123 22              168             ret
+0124                 169             muoi_min:
+0124 EF              170             mov A, R7
+0125 540F            171             anl A, #00Fh
+0127 2401            172             add A, #001h
+0129 FF              173             mov R7,A
+012A 1200E5          174             lcall delay
+012D E4              175             clr A
+012E 020119          176             ljmp min
+                     177             
+0131                 178             hour1:
+0131 758010          179             mov 80h, #010h
+0134 1200E5          180             lcall delay
+0137 22              181             ret 
+                     182             
+0138                 183             hour2:
+0138 758020          184             mov 80h, #020h
+013B 1200E5          185             lcall delay
+013E 22              186             ret
+                     187             
+013F                 188             hour3:
+013F 758030          189             mov 80h, #030h
+A51 MACRO ASSEMBLER  CLOCK24H                                                             05/14/2022 16:14:25 PAGE     4
+
+0142 1200E5          190             lcall delay
+0145 22              191             ret
+0146                 192             hour4:
+0146 758040          193             mov 80h, #040h
+0149 1200E5          194             lcall delay
+014C 22              195             ret
+014D                 196             hour5:
+014D 758050          197             mov 80h, #050h
+0150 1200E5          198             lcall delay
+0153 22              199             ret
+0154                 200             hour6:
+0154 758060          201             mov 80h, #060h
+0157 1200E5          202             lcall delay
+015A 22              203             ret
+015B                 204             hour7:
+015B 758070          205             mov 80h, #070h
+015E 1200E5          206             lcall delay
+0161 22              207             ret
+0162                 208             hour8:
+0162 758080          209             mov 80h, #080h
+0165 1200E5          210             lcall delay
+0168 22              211             ret
+0169                 212             hour9:
+0169 758090          213             mov 80h, #090h
+016C 1200E5          214             lcall delay
+016F 22              215             ret
+                     216             
+0170                 217             hour10:
+0170 758001          218             mov 80h, #001h
+0173 1200E5          219             lcall delay
+0176 22              220             ret
+                     221             
+0177                 222             hour11:
+0177 758011          223             mov 80h, #011h
+017A 1200E5          224             lcall delay
+017D 22              225             ret
+017E                 226             hour12:
+017E 758021          227             mov 80h, #021h
+0181 1200E5          228             lcall delay
+0184 22              229             ret
+                     230             
+0185                 231             hour13:
+0185 758031          232             mov 80h, #031h
+0188 1200E5          233             lcall delay
+018B 22              234             ret
+                     235             
+018C                 236             hour14:
+018C 758041          237             mov 80h, #041h
+018F 1200E5          238             lcall delay
+0192 22              239             ret
+                     240             
+0193                 241             hour15:
+0193 758051          242             mov 80h, #051h
+0196 1200E5          243             lcall delay
+0199 22              244             ret
+                     245             
+019A                 246             hour16:
+019A 758061          247             mov 80h, #061h
+019D 1200E5          248             lcall delay
+01A0 22              249             ret
+                     250             
+01A1                 251             hour17:
+01A1 758071          252             mov 80h, #071h
+01A4 1200E5          253             lcall delay
+01A7 22              254             ret
+                     255             
+A51 MACRO ASSEMBLER  CLOCK24H                                                             05/14/2022 16:14:25 PAGE     5
+
+01A8                 256             hour18:
+01A8 758081          257             mov 80h, #081h
+01AB 1200E5          258             lcall delay
+01AE 22              259             ret
+                     260             
+01AF                 261             hour19:
+01AF 758091          262             mov 80h, #091h
+01B2 1200E5          263             lcall delay
+01B5 22              264             ret
+                     265             
+01B6                 266             hour20:
+01B6 758002          267             mov 80h, #002h
+01B9 1200E5          268             lcall delay
+01BC 22              269             ret
+01BD                 270             hour21:
+01BD 758012          271             mov 80h, #012h
+01C0 1200E5          272             lcall delay
+01C3 22              273             ret
+01C4                 274             hour22:
+01C4 758022          275             mov 80h, #022h
+01C7 1200E5          276             lcall delay
+01CA 22              277             ret
+01CB                 278             hour23:
+01CB 758032          279             mov 80h, #032h
+01CE 1200E5          280             lcall delay
+01D1 22              281             ret
+01D2                 282             hour24:
+01D2 758000          283             mov 80h, #000h
+01D5 1200E5          284             lcall delay
+01D8 22              285             ret
+                     286     
+                     287     
+                     288     END
+                                     
+A51 MACRO ASSEMBLER  CLOCK24H                                                             05/14/2022 16:14:25 PAGE     6
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+BEGIN. . . . . . .  C ADDR   00CEH   A   
+COUNT_MIN. . . . .  C ADDR   0113H   A   
+DELAY. . . . . . .  C ADDR   00E5H   A   
+DEM_PHUT . . . . .  C ADDR   00D4H   A   
+HOUR1. . . . . . .  C ADDR   0131H   A   
+HOUR10 . . . . . .  C ADDR   0170H   A   
+HOUR11 . . . . . .  C ADDR   0177H   A   
+HOUR12 . . . . . .  C ADDR   017EH   A   
+HOUR13 . . . . . .  C ADDR   0185H   A   
+HOUR14 . . . . . .  C ADDR   018CH   A   
+HOUR15 . . . . . .  C ADDR   0193H   A   
+HOUR16 . . . . . .  C ADDR   019AH   A   
+HOUR17 . . . . . .  C ADDR   01A1H   A   
+HOUR18 . . . . . .  C ADDR   01A8H   A   
+HOUR19 . . . . . .  C ADDR   01AFH   A   
+HOUR2. . . . . . .  C ADDR   0138H   A   
+HOUR20 . . . . . .  C ADDR   01B6H   A   
+HOUR21 . . . . . .  C ADDR   01BDH   A   
+HOUR22 . . . . . .  C ADDR   01C4H   A   
+HOUR23 . . . . . .  C ADDR   01CBH   A   
+HOUR24 . . . . . .  C ADDR   01D2H   A   
+HOUR3. . . . . . .  C ADDR   013FH   A   
+HOUR4. . . . . . .  C ADDR   0146H   A   
+HOUR5. . . . . . .  C ADDR   014DH   A   
+HOUR6. . . . . . .  C ADDR   0154H   A   
+HOUR7. . . . . . .  C ADDR   015BH   A   
+HOUR8. . . . . . .  C ADDR   0162H   A   
+HOUR9. . . . . . .  C ADDR   0169H   A   
+LOOP . . . . . . .  C ADDR   0102H   A   
+LOOP4. . . . . . .  C ADDR   00E9H   A   
+LOOP5. . . . . . .  C ADDR   00E7H   A   
+LOOP_1MS . . . . .  C ADDR   00F4H   A   
+MAIN_PRO . . . . .  C ADDR   0030H   A   
+MIN. . . . . . . .  C ADDR   0119H   A   
+MUOI_MIN . . . . .  C ADDR   0124H   A   
+P0 . . . . . . . .  D ADDR   0080H   A   
+P2 . . . . . . . .  D ADDR   00A0H   A   
+P3 . . . . . . . .  D ADDR   00B0H   A   
+RST_ISR. . . . . .  C ADDR   00C3H   A   
+SEC. . . . . . . .  C ADDR   0100H   A   
+TF1. . . . . . . .  B ADDR   0088H.7 A   
+TH1. . . . . . . .  D ADDR   008DH   A   
+TL1. . . . . . . .  D ADDR   008BH   A   
+TMOD . . . . . . .  D ADDR   0089H   A   
+TR1. . . . . . . .  B ADDR   0088H.6 A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

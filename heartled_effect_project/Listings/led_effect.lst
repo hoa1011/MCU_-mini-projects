@@ -1,0 +1,256 @@
+A51 MACRO ASSEMBLER  LED_EFFECT                                                           05/03/2022 22:38:17 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\led_effect.obj
+ASSEMBLER INVOKED BY: E:\Programing Dev Softwares\KeilC\C51\BIN\A51.EXE led_effect.a51 SET(SMALL) DEBUG PRINT(.\Listings
+                      \led_effect.lst) OBJECT(.\Objects\led_effect.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     ; Viet chuong trinh tao 3 hieu ung led khong dung Timer
+                       2     
+0000                   3     ORG 0000h
+0000 020030            4             ljmp main_pro
+0030                   5     ORG 0030h       
+0030                   6             main_pro:
+0030 7E05              7             mov R6, #5
+0032                   8             lap_effect1:
+0032 120062            9             lcall hieu_ung1
+0035 DEFB             10             djnz R6, lap_effect1 ;lap chay hieu ung 1 x 6 lan
+0037 7E01             11             mov R6, #1
+0039                  12             lap_effect2:
+0039 12007C           13             lcall hieu_ung2
+003C DEFB             14             djnz R6, lap_effect2 ;lap chay hieu ung x 2 lan
+003E 7E04             15             mov R6,#4
+0040                  16             lap_effect3:
+0040 120106           17             lcall hieu_ung3
+0043 DEFB             18             djnz R6, lap_effect3 ;lap chay hieu ung 3 x 5 lan
+0045 020030           19             ljmp main_pro
+                      20             
+                      21             ;long delay
+0048 7C0A             22             mov R4, #10
+004A                  23             delay1:
+004A 7804             24             mov R0,#4
+004C                  25             delay1_loop1:
+004C 79FA             26             mov R1,#250
+004E                  27             delay1_loop2:   
+004E D9FE             28             djnz R1, delay1_loop2
+0050 D8FA             29             djnz R0,delay1_loop1
+0052 DCF6             30             djnz R4, delay1
+0054 22               31             ret
+                      32             
+                      33             ;short delay
+0055 7D02             34             mov R5, #2
+0057                  35             delay2:
+0057 7A05             36             mov R2,#5
+0059                  37             delay2_loop1:
+0059 7B40             38             mov R3,#320
+*** _________________________________________^
+*** WARNING #A52 IN 38 (led_effect.a51, LINE 38): VALUE HAS BEEN TRUNCATED TO 8 BITS
+005B                  39             delay2_loop2:   
+005B DBFE             40             djnz R3, delay2_loop2
+005D DAFA             41             djnz R2,delay2_loop1
+005F DDF6             42             djnz R5, delay2
+0061 22               43             ret
+                      44             
+0062                  45             hieu_ung1:
+0062 E4               46             clr A
+0063 7400             47             mov A, #00h
+                      48             
+0065 F580             49             mov P0,A
+0067 F590             50             mov P1,A
+0069 F5A0             51             mov P2, A
+006B F5B0             52             mov P3,A
+                      53             
+006D 114A             54             acall delay1
+                      55             
+A51 MACRO ASSEMBLER  LED_EFFECT                                                           05/03/2022 22:38:17 PAGE     2
+
+006F 74FF             56             mov A, #0FFh
+0071 F580             57             mov P0,A
+0073 F590             58             mov P1,A
+0075 F5A0             59             mov P2, A
+0077 F5B0             60             mov P3,A
+                      61             
+0079 114A             62             acall delay1
+                      63             
+007B 22               64             ret
+                      65             
+                      66     
+007C                  67             hieu_ung2:
+007C E4               68             clr A
+007D F590             69             mov P1,A
+007F F580             70             mov P0,A
+0081 F5A0             71             mov P2,A
+0083 F5B0             72             mov P3,A
+                      73             
+0085 B290             74             cpl P1.0
+0087 1157             75             acall delay2
+0089 B291             76             cpl P1.1
+008B 1157             77             acall delay2
+008D B292             78             cpl P1.2
+008F 1157             79             acall delay2
+0091 B293             80             cpl P1.3
+0093 1157             81             acall delay2
+0095 B294             82             cpl P1.4
+0097 1157             83             acall delay2
+0099 B295             84             cpl P1.5
+009B 1157             85             acall delay2
+009D B296             86             cpl P1.6
+009F 1157             87             acall delay2
+00A1 B297             88             cpl P1.7
+00A3 1157             89             acall delay2
+                      90             
+00A5 B2A0             91             cpl P2.0
+00A7 1157             92             acall delay2
+00A9 B2A1             93             cpl P2.1
+00AB 1157             94             acall delay2
+00AD B2A2             95             cpl P2.2
+00AF 1157             96             acall delay2
+00B1 B2A3             97             cpl P2.3
+00B3 1157             98             acall delay2
+00B5 B2A4             99             cpl P2.4
+00B7 1157            100             acall delay2
+00B9 B2A5            101             cpl P2.5
+00BB 1157            102             acall delay2
+00BD B2A6            103             cpl P2.6
+00BF 1157            104             acall delay2
+00C1 B2A7            105             cpl P2.7
+00C3 1157            106             acall delay2
+                     107             
+00C5 B2B0            108             cpl P3.0
+00C7 1157            109             acall delay2
+00C9 B2B1            110             cpl P3.1
+00CB 1157            111             acall delay2
+00CD B2B2            112             cpl P3.2
+00CF 1157            113             acall delay2
+00D1 B2B3            114             cpl P3.3
+00D3 1157            115             acall delay2
+00D5 B2B4            116             cpl P3.4
+00D7 1157            117             acall delay2
+00D9 B2B5            118             cpl P3.5
+00DB 1157            119             acall delay2
+00DD B2B6            120             cpl P3.6
+00DF 1157            121             acall delay2
+A51 MACRO ASSEMBLER  LED_EFFECT                                                           05/03/2022 22:38:17 PAGE     3
+
+00E1 B2B7            122             cpl P3.7
+00E3 1157            123             acall delay2
+                     124             
+00E5 B280            125             cpl P0.0
+00E7 1157            126             acall delay2
+00E9 B281            127             cpl P0.1
+00EB 1157            128             acall delay2
+00ED B282            129             cpl P0.2
+00EF 1157            130             acall delay2
+00F1 B283            131             cpl P0.3
+00F3 1157            132             acall delay2
+00F5 B284            133             cpl P0.4
+00F7 1157            134             acall delay2
+00F9 B285            135             cpl P0.5
+00FB 1157            136             acall delay2
+00FD B286            137             cpl P0.6
+00FF 1157            138             acall delay2
+0101 B287            139             cpl P0.7
+0103 1157            140             acall delay2
+0105 22              141             ret
+                     142     
+0106                 143             hieu_ung3:
+                     144             ;1 -> 2 -> 3 -> 0
+0106 E4              145             clr A
+0107 F590            146             mov P1,A
+0109 F580            147             mov P0,A
+010B F5A0            148             mov P2,A
+010D F5B0            149             mov P3,A
+                     150             
+010F B290            151             cpl P1.0
+0111 B2A0            152             cpl P2.0
+0113 B2B0            153             cpl P3.0
+0115 B280            154             cpl P0.0
+                     155     
+0117 1157            156             acall delay2
+                     157             
+0119 B291            158             cpl P1.1
+011B B2A1            159             cpl P2.1
+011D B2B1            160             cpl P3.1
+011F B281            161             cpl P0.1
+                     162             
+0121 1157            163             acall delay2
+                     164             
+0123 B292            165             cpl P1.2
+0125 B2A2            166             cpl P2.2
+0127 B2B2            167             cpl P3.2
+0129 B282            168             cpl P0.2
+                     169             
+012B 1157            170             acall delay2
+                     171             
+012D B293            172             cpl P1.3
+012F B2A3            173             cpl P2.3
+0131 B2B3            174             cpl P3.3
+0133 B283            175             cpl P0.3
+                     176             
+0135 1157            177             acall delay2
+                     178             
+0137 B294            179             cpl P1.4
+0139 B2A4            180             cpl P2.4
+013B B2B4            181             cpl P3.4
+013D B284            182             cpl P0.4
+                     183             
+013F 1157            184             acall delay2
+                     185             
+0141 B295            186             cpl P1.5
+0143 B2A5            187             cpl P2.5
+A51 MACRO ASSEMBLER  LED_EFFECT                                                           05/03/2022 22:38:17 PAGE     4
+
+0145 B2B5            188             cpl P3.5
+0147 B285            189             cpl P0.5
+                     190             
+0149 1157            191             acall delay2
+                     192             
+014B B296            193             cpl P1.6
+014D B2A6            194             cpl P2.6
+014F B2B6            195             cpl P3.6
+0151 B286            196             cpl P0.6
+                     197     
+0153 1157            198             acall delay2
+                     199             
+0155 B297            200             cpl P1.7
+0157 B2A7            201             cpl P2.7
+0159 B2B7            202             cpl P3.7
+015B B287            203             cpl P0.7        
+015D 1157            204             acall delay2
+                     205             
+015F 22              206             ret
+                     207     END
+A51 MACRO ASSEMBLER  LED_EFFECT                                                           05/03/2022 22:38:17 PAGE     5
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+DELAY1 . . . . . .  C ADDR   004AH   A   
+DELAY1_LOOP1 . . .  C ADDR   004CH   A   
+DELAY1_LOOP2 . . .  C ADDR   004EH   A   
+DELAY2 . . . . . .  C ADDR   0057H   A   
+DELAY2_LOOP1 . . .  C ADDR   0059H   A   
+DELAY2_LOOP2 . . .  C ADDR   005BH   A   
+HIEU_UNG1. . . . .  C ADDR   0062H   A   
+HIEU_UNG2. . . . .  C ADDR   007CH   A   
+HIEU_UNG3. . . . .  C ADDR   0106H   A   
+LAP_EFFECT1. . . .  C ADDR   0032H   A   
+LAP_EFFECT2. . . .  C ADDR   0039H   A   
+LAP_EFFECT3. . . .  C ADDR   0040H   A   
+MAIN_PRO . . . . .  C ADDR   0030H   A   
+P0 . . . . . . . .  D ADDR   0080H   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+P2 . . . . . . . .  D ADDR   00A0H   A   
+P3 . . . . . . . .  D ADDR   00B0H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  1 WARNING(S), 0 ERROR(S)

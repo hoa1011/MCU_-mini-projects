@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\Clock24h.obj" 
+TO ".\Objects\Clock24h" 
+PRINT(".\Listings\Clock24h.m51")
