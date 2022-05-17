@@ -1,4 +1,4 @@
-A51 MACRO ASSEMBLER  CLOCK24H                                                             05/14/2022 16:14:25 PAGE     1
+A51 MACRO ASSEMBLER  CLOCK24H                                                             05/16/2022 14:25:29 PAGE     1
 
 
 MACRO ASSEMBLER A51 V8.2.7.0
@@ -65,7 +65,7 @@ LOC  OBJ            LINE     SOURCE
 008A 1200CE           55             lcall begin
                       56             
 008D 12019A           57             lcall hour16
-A51 MACRO ASSEMBLER  CLOCK24H                                                             05/14/2022 16:14:25 PAGE     2
+A51 MACRO ASSEMBLER  CLOCK24H                                                             05/16/2022 14:25:29 PAGE     2
 
 0090 1200CE           58             lcall begin
                       59             
@@ -124,7 +124,7 @@ LOC  OBJ            LINE     SOURCE
 00E4 22              112             ret
                      113             
 00E5                 114             delay:
-                     115             ; su dung timer 0 che do 1
+                     115             ; su dung timer 1 che do 1
 00E5 7E05            116             mov R6, #005h
 00E7                 117             loop5:
 00E7 7DC8            118             mov R5, #0C8h
@@ -133,7 +133,7 @@ LOC  OBJ            LINE     SOURCE
 00EC 758DFC          121             mov TH1, #0FCh
 00EF 758B18          122             mov TL1, #018h
 00F2 D28E            123             setb TR1
-A51 MACRO ASSEMBLER  CLOCK24H                                                             05/14/2022 16:14:25 PAGE     3
+A51 MACRO ASSEMBLER  CLOCK24H                                                             05/16/2022 14:25:29 PAGE     3
 
 00F4                 124             loop_1ms:
 00F4 308FFD          125             jnb TF1, loop_1ms
@@ -201,7 +201,7 @@ LOC  OBJ            LINE     SOURCE
                      187             
 013F                 188             hour3:
 013F 758030          189             mov 80h, #030h
-A51 MACRO ASSEMBLER  CLOCK24H                                                             05/14/2022 16:14:25 PAGE     4
+A51 MACRO ASSEMBLER  CLOCK24H                                                             05/16/2022 14:25:29 PAGE     4
 
 0142 1200E5          190             lcall delay
 0145 22              191             ret
@@ -269,7 +269,7 @@ LOC  OBJ            LINE     SOURCE
 01A4 1200E5          253             lcall delay
 01A7 22              254             ret
                      255             
-A51 MACRO ASSEMBLER  CLOCK24H                                                             05/14/2022 16:14:25 PAGE     5
+A51 MACRO ASSEMBLER  CLOCK24H                                                             05/16/2022 14:25:29 PAGE     5
 
 01A8                 256             hour18:
 01A8 758081          257             mov 80h, #081h
@@ -305,7 +305,13 @@ LOC  OBJ            LINE     SOURCE
                      287     
                      288     END
                                      
-A51 MACRO ASSEMBLER  CLOCK24H                                                             05/14/2022 16:14:25 PAGE     6
+                             © 2022 GitHub, Inc.
+*** WARNING #A73 IN 290 (Clock24h.a51, LINE 290): TEXT FOUND BEYOND END STATEMENT - IGNORED
+                             Terms
+                             Privacy
+                             Securit
+                                     
+A51 MACRO ASSEMBLER  CLOCK24H                                                             05/16/2022 14:25:29 PAGE     6
 
 SYMBOL TABLE LISTING
 ------ ----- -------
@@ -363,4 +369,4 @@ TR1. . . . . . . .  B ADDR   0088H.6 A
 REGISTER BANK(S) USED: 0 
 
 
-ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)
+ASSEMBLY COMPLETE.  1 WARNING(S), 0 ERROR(S)
