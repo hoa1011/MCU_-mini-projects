@@ -1,3 +1,6 @@
+;-- Chuong trinh mach dong ho 24h voi gia tri khoi tao ban dau la 00: 00: 00
+;-- Han che khuyet diem giai thuat & source code: Chua linh hoat set gio theo y muon duoc
+;-- Can toi uu hoa ham hour
 ORG 0000h
 	ljmp RST_ISR
 ORG 0030h
@@ -111,23 +114,22 @@ ORG 0030h
 	lcall delay
 	ret
 	
-	delay:
-	; su dung timer 1 che do 1
-	mov R6, #005h
-	loop5:
-	mov R5, #0C8h
-	loop4:
-	mov TMOD, #10h
-	mov TH1, #0FCh
-	mov TL1, #018h
-	setb TR1
-	loop_1ms:
-	jnb TF1, loop_1ms
-	clr TF1
-	clr TR1
-	djnz R5, loop4
-	djnz R6, loop5
-	ret
+DELAY:
+	 MOV R4,#0
+	 L2:
+	 INC R4
+	 NOP
+	 CJNE R4,#250,L2
+	 RET
+	 DELAY1S:
+	 MOV R5,#2
+	 L3:
+	 MOV R6,#125
+	 L4:
+	 CALL DELAY
+	 DJNZ R6,L4
+	 DJNZ R5,L3
+	 RET
 	
 
 	sec:
@@ -170,10 +172,11 @@ ORG 0030h
 	mov A, R7
 	anl A, #00Fh
 	add A, #001h
+	mov 0B0h, A
 	mov R7,A
-	lcall delay
+	
 	clr A
-	ljmp min
+	ret
 	
 	hour1:
 	mov 80h, #010h
