@@ -1,1 +1,1 @@
-# MCU_8051_mini projects
+# MCU_8051
